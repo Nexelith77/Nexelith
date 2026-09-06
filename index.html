@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nihan Chowdhury</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ash:#9CA3A0;
+    --ash-dim:#6E7570;
+    --navy:#0B1A2E;
+    --navy-deep:#071120;
+    --purple:#5A3E85;
+    --purple-bright:#8A63C7;
+    --chocolate:#5C3A22;
+    --chocolate-bright:#8C5A32;
+    --chakra:#9FD8EE;
+    --paper:#E7E7E2;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--navy-deep);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+    cursor:none;
+  }
+
+  @media (max-width:800px){
+    body{cursor:auto;}
+    #cursorDot,#chakraCanvas{display:none;}
+  }
+
+  ::selection{background:var(--purple); color:var(--paper);}
+
+  /* --- chakra canvas + cursor --- */
+  #chakraCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:5;
+    mix-blend-mode:screen;
+  }
+
+  #cursorDot{
+    position:fixed;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--chakra);
+    box-shadow:0 0 12px 4px rgba(159,216,238,0.7);
+    pointer-events:none;
+    z-index:6;
+    transform:translate(-50%,-50%);
+    transition:transform .08s ease-out;
+  }
+
+  a{color:var(--purple-bright); text-decoration:none;}
+  a:hover{color:var(--chakra);}
+
+  section{
+    position:relative;
+    z-index:2;
+    padding:7rem 8vw;
+    max-width:1200px;
+    margin:0 auto;
+  }
+
+  @media (max-width:700px){
+    section{padding:5rem 6vw;}
+  }
+
+  /* --- hero --- */
+  #hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:0;
+    padding-bottom:0;
+  }
+
+  .mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    color:var(--chakra);
+    letter-spacing:0.02em;
+    margin-bottom:1.6rem;
+  }
+
+  h1.name{
+    font-family:'Sora', sans-serif;
+    font-weight:800;
+    font-size:clamp(3rem, 9vw, 6.5rem);
+    line-height:0.98;
+    margin:0 0 1.4rem 0;
+    color:var(--paper);
+  }
+
+  .tagline{
+    font-family:'Sora', sans-serif;
+    font-weight:600;
+    font-size:clamp(1.1rem, 2.4vw, 1.6rem);
+    color:var(--ash);
+    max-width:34ch;
+    margin:0 0 2.4rem 0;
+    line-height:1.4;
+  }
+
+  .hero-facts{
+    display:flex;
+    gap:2.4rem;
+    flex-wrap:wrap;
+    border-top:1px solid var(--chocolate-bright);
+    padding-top:1.6rem;
+  }
+
+  .hero-fact{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    color:var(--ash-dim);
+  }
+
+  .hero-fact strong{
+    display:block;
+    font-family:'Sora', sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--paper);
+    margin-bottom:0.2rem;
+  }
+
+  /* --- about --- */
+  #about{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:4rem;
+    border-top:1px solid rgba(156,163,160,0.2);
+  }
+
+  @media (max-width:800px){
+    #about{grid-template-columns:1fr;}
+  }
+
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    color:var(--purple-bright);
+    margin-bottom:1rem;
+  }
+
+  #about h2{
+    font-family:'Sora', sans-serif;
+    font-weight:700;
+    font-size:clamp(1.8rem, 3.5vw, 2.6rem);
+    margin:0 0 1.4rem 0;
+    color:var(--paper);
+  }
+
+  #about p{
+    color:var(--ash);
+    font-size:1.05rem;
+    line-height:1.75;
+    max-width:56ch;
+    margin:0 0 1.2rem 0;
+  }
+
+  .about-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    border-left:2px solid var(--chocolate-bright);
+  }
+
+  .about-list li{
+    padding:0.9rem 0 0.9rem 1.4rem;
+    border-bottom:1px solid rgba(156,163,160,0.15);
+    font-size:0.95rem;
+    color:var(--ash);
+  }
+
+  .about-list li span{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--chakra);
+    margin-bottom:0.3rem;
+  }
+
+  /* --- goals --- */
+  #goals{border-top:1px solid rgba(156,163,160,0.2);}
+
+  .goal-row{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:2rem;
+    align-items:baseline;
+    padding:1.8rem 0;
+    border-bottom:1px solid rgba(156,163,160,0.15);
+  }
+
+  .goal-row:nth-child(odd){border-left:3px solid var(--purple);}
+  .goal-row:nth-child(even){border-left:3px solid var(--chocolate-bright);}
+  .goal-row{padding-left:1.6rem;}
+
+  .goal-num{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ash-dim);
+    font-size:0.85rem;
+  }
+
+  .goal-row h3{
+    font-family:'Sora', sans-serif;
+    font-size:1.3rem;
+    font-weight:600;
+    margin:0 0 0.4rem 0;
+    color:var(--paper);
+  }
+
+  .goal-row p{
+    margin:0;
+    color:var(--ash);
+    font-size:0.98rem;
+    line-height:1.6;
+    max-width:60ch;
+  }
+
+  /* --- interests --- */
+  #interests{border-top:1px solid rgba(156,163,160,0.2);}
+
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.7rem;
+    margin-top:1.6rem;
+  }
+
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    padding:0.5rem 1rem;
+    border:1px solid var(--ash-dim);
+    color:var(--ash);
+    border-radius:2px;
+    transition:border-color .2s, color .2s;
+  }
+
+  .tag:hover{
+    border-color:var(--chakra);
+    color:var(--chakra);
+  }
+
+  /* --- footer --- */
+  footer{
+    border-top:1px solid rgba(156,163,160,0.2);
+    padding:3rem 8vw 4rem;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    color:var(--ash-dim);
+    position:relative;
+    z-index:2;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="chakraCanvas"></canvas>
+<div id="cursorDot"></div>
+
+<section id="hero">
+  <div class="mark">// initializing</div>
+  <h1 class="name">Nihan<br>Chowdhury</h1>
+  <p class="tagline">First-year CSE student, building toward a career that starts in code and ends in command.</p>
+  <div class="hero-facts">
+    <div class="hero-fact"><strong>21</strong>Age</div>
+    <div class="hero-fact"><strong>Bangladesh</strong>Based in</div>
+    <div class="hero-fact"><strong>Southeast University</strong>Studying at</div>
+    <div class="hero-fact"><strong>CSE, Year 1</strong>Program</div>
+  </div>
+</section>
+
+<section id="about">
+  <div>
+    <div class="section-label">about</div>
+    <h2>Curious by default, rational by choice.</h2>
+    <p>Computers and software aren't just a subject I study — they're the thing I keep coming back to on my own time. New tools, new languages, new systems: if it runs on a machine, I want to understand how.</p>
+    <p>I try to reason through things rather than react to them, and I'd rather hear the plain truth than a comfortable version of it. That's the only way I know to actually get better.</p>
+  </div>
+  <ul class="about-list">
+    <li><span>education</span>Southeast University — B.Sc. in Computer Science &amp; Engineering, 1st year</li>
+    <li><span>direction</span>Software engineering, with an eye toward eventually building and leading my own team</li>
+    <li><span>reference point</span>Companies like Google — the kind of engineering bar I'm aiming for</li>
+    <li><span>outlook</span>Optimistic, rational, and mostly unbothered by things outside my control</li>
+  </ul>
+</section>
+
+<section id="goals">
+  <div class="section-label">where this is going</div>
+  <div class="goal-row">
+    <span class="goal-num">01</span>
+    <div><h3>Master the fundamentals</h3><p>Data structures, algorithms, systems — the parts of computer science that don't go out of date, learned properly instead of just passed.</p></div>
+  </div>
+  <div class="goal-row">
+    <span class="goal-num">02</span>
+    <div><h3>Build real things</h3><p>Projects that ship and get used, not just assignments that get graded. Every build is practice for the next, harder one.</p></div>
+  </div>
+  <div class="goal-row">
+    <span class="goal-num">03</span>
+    <div><h3>Get into a top-tier company</h3><p>Google or a company of that caliber — a proving ground where the standard is set by the best engineers around.</p></div>
+  </div>
+  <div class="goal-row">
+    <span class="goal-num">04</span>
+    <div><h3>Build and lead something of my own</h3><p>Eventually, a company or a team that runs on my judgment — earned by first becoming good enough to deserve that call.</p></div>
+  </div>
+</section>
+
+<section id="interests">
+  <div class="section-label">exploring right now</div>
+  <div class="tags">
+    <span class="tag">Programming languages</span>
+    <span class="tag">Systems &amp; architecture</span>
+    <span class="tag">Software engineering</span>
+    <span class="tag">Algorithms</span>
+    <span class="tag">New tools &amp; frameworks</span>
+    <span class="tag">Anything with a terminal</span>
+  </div>
+</section>
+
+<footer>
+  <span>Nihan Chowdhury — Dhaka, Bangladesh</span>
+  <span>Southeast University · CSE '29</span>
+</footer>
+
+<script>
+// Chakra-flow cursor trail — spiraling sky-blue chakra rings that follow the pointer
+const canvas = document.getElementById('chakraCanvas');
+const ctx = canvas.getContext('2d');
+const dot = document.getElementById('cursorDot');
+let particles = [];
+let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+let lastX = mouseX, lastY = mouseY;
+const isTouch = window.matchMedia('(max-width:800px)').matches;
+
+function resize(){
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+}
+resize();
+window.addEventListener('resize', resize);
+
+function spawnChakra(x, y, dist){
+  const count = Math.min(3, Math.max(1, Math.floor(dist/14)));
+  for(let i=0;i<count;i++){
+    particles.push({
+      x, y,
+      angle: Math.random()*Math.PI*2,
+      radius: 4 + Math.random()*4,
+      maxRadius: 22 + Math.random()*16,
+      spin: (Math.random() > 0.5 ? 1 : -1) * (0.12 + Math.random()*0.1),
+      life: 1,
+      decay: 0.018 + Math.random()*0.012
+    });
+  }
+  if(particles.length > 220) particles.splice(0, particles.length - 220);
+}
+
+window.addEventListener('mousemove', (e)=>{
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX + 'px';
+  dot.style.top = mouseY + 'px';
+  const dist = Math.hypot(mouseX-lastX, mouseY-lastY);
+  if(!isTouch) spawnChakra(mouseX, mouseY, dist);
+  lastX = mouseX; lastY = mouseY;
+});
+
+function drawChakra(p){
+  const t = 1 - p.life; // 0 -> 1 as it ages
+  const r = p.radius + t * p.maxRadius;
+  const alpha = p.life * 0.85;
+  const spokes = 6;
+
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.angle + t * Math.PI * 2 * p.spin);
+  ctx.globalAlpha = alpha;
+
+  // outer ring
+  ctx.strokeStyle = 'rgba(159,216,238,' + (alpha*0.9) + ')';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.arc(0,0,r,0,Math.PI*2);
+  ctx.stroke();
+
+  // swirling spokes (chakra flow lines)
+  ctx.strokeStyle = 'rgba(200,235,248,' + (alpha) + ')';
+  ctx.lineWidth = 1.2;
+  for(let i=0;i<spokes;i++){
+    const a = (Math.PI*2/spokes)*i;
+    const innerR = r*0.25;
+    const outerR = r;
+    const curve = r*0.5;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a)*innerR, Math.sin(a)*innerR);
+    ctx.quadraticCurveTo(
+      Math.cos(a+0.6)*curve, Math.sin(a+0.6)*curve,
+      Math.cos(a+0.9)*outerR, Math.sin(a+0.9)*outerR
+    );
+    ctx.stroke();
+  }
+
+  // core glow
+  const grad = ctx.createRadialGradient(0,0,0,0,0,r*0.35);
+  grad.addColorStop(0, 'rgba(220,245,253,' + alpha + ')');
+  grad.addColorStop(1, 'rgba(159,216,238,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(0,0,r*0.35,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.life -= p.decay;
+    drawChakra(p);
+  });
+  particles = particles.filter(p => p.life > 0);
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+
+</body>
+</html>
